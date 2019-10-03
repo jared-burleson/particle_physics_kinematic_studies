@@ -13,10 +13,11 @@ def angle_of_separation(pt_a,eta_a,phi_a,pt_b,eta_b,phi_b):
     return angle
 
 #Using pandas library to read in the data file and assign an array for the values of each column of the .csv file
-file_lists = [import_file_Dframe]
+import_file_lists = [import_file_Dframe]
+export_file_lists = [export_file_Dframe]
 
-for i in range(len(file_lists)):
-    data = pd.read_csv(file_lists[i])
+for i in range(len(import_file_lists)):
+    data = pd.read_csv(import_file_lists[i])
 
     #This list contains all the named columns in the data file, each is a specific kinematic element generated for the data
     data_input_labels = ["tj_E","tj_pt","tj_eta","tj_phi","nbhad",
@@ -49,8 +50,4 @@ for i in range(len(file_lists)):
             
     #This is a pandas DataFrame table; each row is a different event with the desired number of bhad and all other relevant kinematic info
     kinematic_4bhad_data = pd.DataFrame(data_kinematic_generated_values, columns=data_kinematic_generated_labels)
-    
-    if(i == 0):
-        kinematic_4bhad_data.to_csv(export_file_Dframe)
-    else if(i == 1):
-        kinematic_4bhad_data.to_csv(export_file_Hframe)
+    kinematic_4bhad_data.to_csv(export_file_lists[i])
