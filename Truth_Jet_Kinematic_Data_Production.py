@@ -4,9 +4,6 @@ import math
 import_file_Dframe  = 'test_hgg_event_data.csv' #File that contains the raw kinematic data available, Dframe refers to Detector Frame
 export_file_Dframe  = 'test_hgg_event_output_data.csv' #File that will contain the raw kinematic data available and any user-generated manipulations
 
-#import_file_Hframe  = 'hgg_truth_jet_information-Hframe.csv' #File that contains the raw kinematic data available, Hframe refers to Higgs Frame
-#export_file_Hframe  = 'hgg_truth_jet_information_4_bhad_Hframe.csv' #File that will contain the raw kinematic data available and any user-generated manipulations
-
 #Function to generate the angle of separation between any two particle-jets
 def angle_of_separation(pt_a,eta_a,phi_a,pt_b,eta_b,phi_b):
     angle = (math.acos(((pt_a*math.cos(phi_a))*(pt_b*math.cos(phi_b))+(pt_a*math.sin(phi_a))*(pt_b*math.sin(phi_b))+(pt_a*math.sinh(eta_a))*(pt_b*math.sinh(eta_b)))/((pt_a*math.cosh(eta_a))*(pt_b*math.cosh(eta_b)))))*180/math.pi
