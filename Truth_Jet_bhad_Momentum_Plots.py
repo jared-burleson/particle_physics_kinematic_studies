@@ -1,29 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
+#This code is to generate 3-D Vector Momentum Plots of the four b-hadrons in a Higgs event
+#It will use the generated file from the previous Kinematic_Data_Production.py where only events with 4 b-hadrons are recorded
 
 import pandas as pd
-import math
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
-import numpy as np
-from itertools import combinations
 from mpl_toolkits.mplot3d import Axes3D
 
-import_file_hgg_Dframe = 'Truth_Jet_Detector_Reference_Frame_Data/hgg_truth_jet_information_4_bhad.csv'
-import_file_hbb_Dframe = 'Truth_Jet_Detector_Reference_Frame_Data/hbb_truth_jet_information_4_bhad.csv'
+import_file_hgg_Dframe = 'test_hgg_event_output_data.csv'
 
-import_file_lists = [import_file_hgg_Dframe, import_file_hbb_Dframe]
-savefig_file_lists = ["Truth_Jet_Detector_Reference_Frame_Plots/Hgg_Momentum_Vectors/Event","Truth_Jet_Detector_Reference_Frame_Plots/Hbb_Momentum_Vectors/Event"]
-title_lists = ["Hgg","Hbb"]
+import_file_lists = [import_file_hgg_Dframe]
+savefig_file_lists = ['Hgg_Momentum_Vector_Plots/Event']
+title_lists = ['Hgg']
 
 for i in range(len(import_file_lists)):
     data = pd.read_csv(import_file_lists[i])
     
     for j in range(len(data)):
-        #Plotting the 3d momentum vectors for each bhadron in an event with 4 bhadrons
+        #Plotting the 3-d momentum vectors for each bhadron in an event with 4 bhadrons
         plt.clf()
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -38,10 +30,3 @@ for i in range(len(import_file_lists)):
         plt.legend(('bhad1','bhad2','bhad3','bhad4'))
         fig.tight_layout()
         plt.savefig(str(savefig_file_lists[i])+str(data["event_ID"][j])+".png", dpi=300, bbox_inches='tight') #Saves figures out to a file path inside the main folder
-
-
-# In[ ]:
-
-
-
-
