@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
+# This file is for analyzing the angle of separation between b-hadrons in 4 b-hadron events. 
+# This is done by plotting adjusted frequency distribution for different characteristics of angle of separation.
+# The code presented below is a framework code, meaning that if you give it a certain number of files, 
+# and fill in the specific parameters in the code, it will be able to generate any combination of plots.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,18 +9,25 @@ import matplotlib.ticker as ticker
 import math
 import numpy as np
 
+# I hate getting warning messages, ignored since they aren't errors.
 import warnings
 warnings.filterwarnings('ignore')
 
-import_file_hgg_Dframe  = 'Truth_Jet_Detector_Reference_Frame_Data/hgg_truth_jet_information_4_bhad.csv'
-import_file_hbb_Dframe  = 'Truth_Jet_Detector_Reference_Frame_Data/hbb_truth_jet_information_4_bhad.csv'
-import_file_hgg_Hframe = 'Truth_Jet_Higgs_Reference_Frame_Data/hgg_truth_jet_information_4_bhad_Hframe.csv'
-import_file_hbb_Hframe  = 'Truth_Jet_Higgs_Reference_Frame_Data/hbb_truth_jet_information_4_bhad_Hframe.csv'
-import_file_hgg_TJframe  = 'Truth_Jet_TJ_Reference_Frame_Data/hgg_truth_jet_information_4_bhad_tjframe.csv'
-import_file_hbb_TJframe = 'Truth_Jet_TJ_Reference_Frame_Data/hbb_truth_jet_information_4_bhad_tjframe.csv'
+# This can be any number of import files to analyze, for my work, I used two different processes against each other in analysis.
+# The code for plotting in based on the concept of only comparing two individual file information against each other.
+# If there is a need to analyze more processes at once (say 3), then the code will need to be altered more than adding another file.
+import_file_process1 = 'kinematic_information_process2_4_bhad.csv'
+import_file_process2 = 'kinematic_information_process2_4_bhad.csv'
 
-import_file_lists   = [import_file_hgg_Dframe, import_file_hbb_Dframe, import_file_hgg_Hframe, import_file_hbb_Hframe, import_file_hgg_TJframe, import_file_hbb_TJframe]
-number_event_splits = [193, 214, 193, 266, 284, 266]
+import_file_lists   = [import_file_process1, import_file_process2]
+number_event_splits = np.zeros(len(import_file_lists))
+
+for i in range(len(import_file_lists)):
+    number_event_splits[i] = len(pd.read_csv(import_file_lists[i]))
+
+# The length number of angle splits is how many different methods are analyzed in plots, I have chosen to look at 8 different methods, more or less can be chosen
+# The physical value in each index for number_angle_splits is the number of bins that divides the angle data.
+# angle_range_weights should have the same size as number_angle_splits, it is the weight to the angle_ranges for each analysis done/
 number_angle_splits = [38, 38, 38, 38, 38, 38, 38, 38]
 angle_range_weights = [1, 1, 1, 1, 1, 1, 1, 1]
 angle_range_values  = [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185]
@@ -29,7 +35,7 @@ angle_centers_array = [[0 for x in range(len(number_angle_splits))] for y in ran
 angle_entries_array = [[0 for x in range(len(number_angle_splits))] for y in range(len(import_file_lists))]
 angle_errors_array  = [[0 for x in range(len(number_angle_splits))] for y in range(len(import_file_lists))]
 
-
+# This function sorts the angles in an event to sort by smallest to largest angle.
 def angle_sort(angle_separation_deg):
     angles = np.asarray(angle_separation_deg)
     
@@ -38,6 +44,8 @@ def angle_sort(angle_separation_deg):
     
     return angles
 
+# This is now the main code, which is responsible for generating the different subsets of angle data on an event per each event to plot
+# the frequencey distribution of, based on the value.
 for i in range(len(import_file_lists)):
     data = pd.read_csv(import_file_lists[i])
     angle_separation_deg = []
@@ -60,6 +68,7 @@ for i in range(len(import_file_lists)):
         for k in range(len(angle_range_values)):
             angle_ranges.append(angle_range_values[k]*angle_range_weights[j])
         
+        # These are the 8 different angle analyses done on the data
         if(j == 0): #all angles per event
             for k in range(len(angles)):
                 for l in range(0,6):
@@ -111,17 +120,14 @@ for i in range(len(import_file_lists)):
         angle_entries_array[i][j] = angle_adj_entries
         angle_errors_array[i][j]  = angle_error_array
 
-#plotting angle distribution section
+# plotting angle distribution section
 
-colors  = ['blue','orange','red','green','yellow','purple']
-xlims   = [90, 180, 180]
-legends = [('H->gg->bbbb Df','H->bbg->bbbb Df'), ('H->gg->bbbb Hf','H->bbg->bbbb Hf'), ('H->gg->bbbb TJf','H->bbg->bbbb TJf')]
-titles  = ['Adjusted Frequency of Angle of Separation between any 2-bhad in an Event','Adjusted Frequency of Minimum Angle of Separation per Event',
-           'Adjusted Frequency of Second Minumum Angle of Separation per Event', 'Adjusted Frequency of Maximum Angle of Separation per Event',
-           'Adjusted Frequency of Second Maximum Angle of Separation per Event', 'Adjusted Frequency of Range (Max-Min) of Angle of Separation per Event',
-           'Adjusted Frequency of Second Range (Second Max - Second Min) of Angle of Separation per Event', 'Adjusted Frequency of Average Angle of Separation per Event',]
-rf      = ["Df","Hf","TJf"]
-angle_type = ["any","min","second_min","max","second_max","range","second_range","average"]
+colors  = [color1, color2]
+xlims   = [xlim_value]
+legends = [(process1_name,process2_name)]
+titles  = [] #Whatever titles you want
+rf      = [] #Whatever reference frame the data is analyzed in 
+angle_type = ["any","min","second_min","max","second_max","range","second_range","average"] #This is default, what I did, but can be changed
 
 for i in range(int(len(import_file_lists)/2)):
     for j in range(len(number_angle_splits)):
@@ -137,28 +143,3 @@ for i in range(int(len(import_file_lists)/2)):
         plt.title(titles[j])
         plt.savefig("Angle_Plots/Hgg_Hbb_"+str(rf[i])+"_"+str(angle_type[j]),dpi=300, bbox_inches='tight')
         plt.show()
-
-
-# In[2]:
-
-
-
-
-
-# In[20]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
