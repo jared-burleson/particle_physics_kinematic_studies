@@ -25,3 +25,7 @@ The file that I have included is `test_hgg_event_data.csv`. This file contains 5
 > This is a extremely condensed version of the type of .csv file that is generated from a simulation. I haven't included any of the coding or methodology for the simulation nor the capturing/isolation of the data that I want, because that is a different topic than the analysis portion here. There is an insane amount of kinematic information avaliable through a simulation, and I have done my best to condense it down to study only factors that are particularly meaningful to my study at the moment. Any future study could contain more or less parameters based on the nature of the study, and thus should be adjusted at the discretion of the project.
 
 /end side_note
+
+This analysis can be done on more than one .csv file. In fact the code is generalized to handle a list of any number of .csv files. The only constraint is that each data file contain the same columns, meaning that the kinematic data to be analyzed should be the same and in the same order in each file in order to avoid errors.
+
+Once all the necessary data .csv files have been generated, it's time to move on to the analysis. 
