@@ -21,5 +21,7 @@ In order to do any kind of data analysis on the kinematics of a particle physics
 The file that I have included is `test_hgg_event_data.csv`. This file contains 5 example events in rows with the columns being the input kinematic information that is useful for analysis.
 
 /side_note 
-This is a extremely condensed version of the type of .csv file that is generated from a simulation. I haven't included any of the coding or methodology for the simulation nor the capturing/isolation of the data that I want, because that is a different topic than the analysis portion here. There is an insane amount of kinematic information avaliable through a simulation, and I have done my best to condense it down to study only factors that are particularly meaningful to my study at the moment. Any future study could contain more or less parameters based on the nature of the study, and thus should be adjusted at the discretion of the project.
+
+> This is a extremely condensed version of the type of .csv file that is generated from a simulation. I haven't included any of the coding or methodology for the simulation nor the capturing/isolation of the data that I want, because that is a different topic than the analysis portion here. There is an insane amount of kinematic information avaliable through a simulation, and I have done my best to condense it down to study only factors that are particularly meaningful to my study at the moment. Any future study could contain more or less parameters based on the nature of the study, and thus should be adjusted at the discretion of the project.
+
 /end side_note
